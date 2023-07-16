@@ -1,24 +1,42 @@
 import React from 'react';
-import logo from './logo.svg';
+import { useTranslation } from 'react-i18next';
 import './App.css';
+import './locales/i18n';
+
+import { Languages, languages } from './locales/i18n';
+
 
 function App() {
+
+  const {t, i18n} = useTranslation();
+
+  const handleChangeLanguage = (lang: Languages) => {
+    console.log(lang);
+    i18n.changeLanguage(lang);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="dropdown">
+        <button className="dropbtn"> 
+          <span className="dropbtn_icon"></span>
+          {t('viewMenu')}
+        </button>
+        <div className="dropdown-content">
+          <a href="#">{t('menu01')}</a>
+          <a href="#">{t('menu02')}</a>
+          <a href="#">{t('menu03')}</a>
+        </div>
+      </div>
+      <div>
+      {
+          languages.map((lang) => (
+            <button key={lang} onClick={() => handleChangeLanguage(lang)}>
+              {t(`language_${lang}`)}
+            </button>
+          ))
+        }
+      </div>
     </div>
   );
 }
